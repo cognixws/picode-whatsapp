@@ -1,0 +1,38 @@
+/* WhatsApp Web in one column below 960px, the width of a panel beside an
+   agent. With no chat open, the chat list fills the panel; with a chat open,
+   the conversation does. Esc closes the chat and brings the list back.
+   Wider, nothing here applies: the usual two columns stay.
+   Selectors are the stable ones (#app, #side, #main, data-testid); the
+   generated class names change with WhatsApp's releases. */
+@media (max-width: 959px) {
+  #app .two {
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* The list. */
+  #app .two:not(:has(#main)) #side {
+    display: flex !important;
+    flex: 1 1 auto !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+  }
+  #app .two:not(:has(#main)) > div:not(:has(#side)) {
+    display: none !important;
+  }
+
+  /* A chat. */
+  #app .two:has(#main) #side,
+  #app .two:has(#main) > header[data-testid="chatlist-header"] {
+    display: none !important;
+  }
+  #app .two:has(#main) #main {
+    display: flex !important;
+    flex: 1 1 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+}
