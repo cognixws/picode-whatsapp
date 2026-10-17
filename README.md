@@ -31,4 +31,4 @@ which restrict automated and bulk messaging and non-personal use.
 
 ## License
 
-MIT
+Apache-2.0
