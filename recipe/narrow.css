@@ -1,38 +1,85 @@
 /* WhatsApp Web in one column below 960px, the width of a panel beside an
-   agent. With no chat open, the chat list fills the panel; with a chat open,
-   the conversation does. Esc closes the chat and brings the list back.
-   Wider, nothing here applies: the usual two columns stay.
-   Selectors are the stable ones (#app, #side, #main, data-testid); the
-   generated class names change with WhatsApp's releases. */
+   agent: with no chat open, the chat list fills the panel; with a chat open,
+   the conversation does, and the recipe's script adds a way back to the list.
+   Selectors are the stable ones (#app, #side, #main, data-testid) and the
+   structure around them; the generated class names change with WhatsApp's
+   releases. Wider, nothing here applies. */
 @media (max-width: 959px) {
+  /* WhatsApp keeps a minimum width wider than a panel. */
   #app .two {
     min-width: 0 !important;
     width: 100% !important;
     max-width: 100% !important;
   }
 
-  /* The list. */
-  #app .two:not(:has(#main)) #side {
-    display: flex !important;
+  /* No chat open: the list fills the panel. */
+  #app .two:not(:has(#main)) > div:has(> #side) {
     flex: 1 1 auto !important;
     width: auto !important;
     min-width: 0 !important;
     max-width: none !important;
   }
-  #app .two:not(:has(#main)) > div:not(:has(#side)) {
+  #app .two:not(:has(#main)) > div:has(> #side) + div {
     display: none !important;
   }
 
-  /* A chat. */
-  #app .two:has(#main) #side,
-  #app .two:has(#main) > header[data-testid="chatlist-header"] {
+  /* A chat open: it fills the panel. */
+  #app .two:has(#main) > header[data-testid="chatlist-header"],
+  #app .two:has(#main) > div:has(> #side) {
     display: none !important;
   }
-  #app .two:has(#main) #main {
-    display: flex !important;
+  #app .two:has(#main) > div:has(#main) {
     flex: 1 1 auto !important;
-    width: 100% !important;
-    max-width: 100% !important;
+    width: auto !important;
     min-width: 0 !important;
+    max-width: none !important;
+  }
+  /* The empty side drawers lie over the chat with a 1px border each, where
+     the wide layout's column dividers would be. */
+  #app [data-testid="drawer-left"],
+  #app [data-testid="drawer-middle"] {
+    border-left-color: transparent !important;
+  }
+
+  /* Screens that open over the list (Status, Channels, Communities, Tools,
+     Settings): WhatsApp lays them out as a left column and a detail column
+     beside it. Here the left column takes the width; the detail column is
+     only an empty-state pane (a promo and a few buttons), so it goes. */
+  #app .two > div:has(> [data-testid="drawer-left"]) {
+    width: 100% !important;
+    max-width: none !important;
+  }
+  #app [data-testid="drawer-left"] {
+    flex: 1 1 100% !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+  }
+  #app [data-testid="drawer-middle"] {
+    display: none !important;
+  }
+
+  /* Dialogs (media gallery, forwarding, settings pages) keep a minimum width
+     wider than a panel. */
+  [role="dialog"],
+  [data-animate-modal-popup] {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    left: 0 !important;
+  }
+
+  /* The profile editor centers a form at least 440px wide (and 640px with its
+     margins) inside a column that is narrower here, with 100px of padding on each side. */
+  #profile-drawer-body > div {
+    min-width: 0 !important;
+  }
+  #profile-drawer-body > div > div {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
   }
 }
