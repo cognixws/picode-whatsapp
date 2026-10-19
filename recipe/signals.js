@@ -30,7 +30,9 @@
     }
     const side = document.getElementById("pane-side");
     if (!side) return;
-    for (const row of side.querySelectorAll('[role="listitem"]')) {
+    // The chat list is a grid of rows (role="row"); older builds used
+    // list items.
+    for (const row of side.querySelectorAll('[role="row"], [role="listitem"]')) {
       const chat = row.querySelector("span[title]")?.getAttribute("title") || "";
       if (!chat) continue;
       const count = unreadOf(row);
