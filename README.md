@@ -117,6 +117,10 @@ governed by
 which restrict automated and bulk messaging and non-personal use. Notifications
 only tell; an agent should reply only when you ask it to.
 
+## Backlog
+
+What is left for this extension is in [BACKLOG.md](BACKLOG.md).
+
 ## License
 
 Apache-2.0
